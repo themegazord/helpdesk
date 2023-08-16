@@ -2,14 +2,10 @@
 
 require_once 'router.php';
 
-use app\infrastructe\mock\HomeNavLinks\NavLinks;
-use app\http\controllers\HomeController;
-
 $router = new \routes\Router();
 
-$homeDi = [NavLinks::class];
 
-$router->addRoute('/', HomeController::class, 'index', $homeDi);
+$router->addRoute('/', 'HomeController', 'index');
 
 // Get the requested URL from the user
 $requestUrl = $_SERVER['REQUEST_URI'];
