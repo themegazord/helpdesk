@@ -4,5 +4,6 @@
     </div>
 </footer>
 
+<script src="/resources/views/Cadastro/script.js"></script>
 </body>
 </html>
