@@ -1,16 +1,10 @@
 <?php
 
 namespace app\http\controllers;
-use app\infrastructe\mock\HomeNavLinks\NavLinks;
 
 class HomeController {
-    public function __construct(
-        private readonly NavLinks $navLinks
-    ){}
+    public function __construct(){}
     public function index(): void {
-        $data = [
-            'navlinks' => $this->navLinks->links()
-        ];
-        include 'resources/views/Home/Home.php';
+        include 'resources/views/Home/HomeView.php';
     }
 }
