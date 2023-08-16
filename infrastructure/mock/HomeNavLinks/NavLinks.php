@@ -10,12 +10,12 @@ class NavLinks
                 'label' => 'Home',
             ],
             [
-                'url' => '/login',
-                'label' => 'Entre no sistema',
-            ],
-            [
                 'url' => '/cadastro',
                 'label' => 'Registre-se',
+            ],
+            [
+                'url' => '/login',
+                'label' => 'Entre no sistema',
             ]
         ];
     }
