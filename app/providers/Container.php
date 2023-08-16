@@ -5,24 +5,36 @@ namespace providers;
 use app\http\controllers\CadastroController;
 use app\http\controllers\HomeController;
 use app\FormRequest\Autenticacao\CadastroRequest;
+use Infrastructure\Database\DatabaseConnection;
 use Domain\Usuario\Services\UsuarioService;
+use Infrastructure\Persistence\Repositories\Usuario\UsuarioRepository;
 
 require 'app\http\controllers\HomeController.php';
 require 'app\http\controllers\CadastroController.php';
 require 'app\FormRequest\Autenticacao\CadastroRequest.php';
 require 'Domain\Usuario\Services\UsuarioService.php';
+require 'Infrastructure\Persistence\Repositories\Usuario\UsuarioRepository.php';
+require 'Infrastructure\Database\DatabaseConnection.php';
 
 class Container
 {
     private $bindings = [];
-    public function bind(string $nomeClasse, object $classeAbstrata, object $classeConcreta): void {
-        $this->bindings[$nomeClasse]['classeAbstrata'] = $classeAbstrata;
-        $this->bindings[$nomeClasse]['classeConcreta'] = $classeConcreta;
+    public function bind(string $classeAbstrata, string $classeConcreta): void {
+        $this->bindings[$classeAbstrata] = $classeConcreta;
     }
 
     public function resolve($nomeClasse): ?object {
         if (isset($this->bindings[$nomeClasse])) {
-            $classeConcreta = $this->bindings[$nomeClasse]['classeConcreta'];
+            $classeConcreta = $this->bindings[$nomeClasse];
+
+            if ($nomeClasse == 'IUsuario') {
+                $databaseConnection = $this->resolve('DB');
+                return new $classeConcreta($databaseConnection);
+            }
+            if ($nomeClasse == 'UsuarioService') {
+                $usuarioRepository = $this->resolve('IUsuario');
+                return new $classeConcreta($usuarioRepository);
+            }
             if ($nomeClasse == 'CadastroRequest') {
                 $usuarioService = $this->resolve('UsuarioService');
                 return new $classeConcreta($usuarioService);
@@ -40,20 +52,21 @@ class Container
      * @throws \Exception
      */
     public function register(string $classe): object {
-        $this->bind('UsuarioService', new UsuarioService(), new UsuarioService());
-        $usuarioService = $this->resolve('UsuarioService');
-
-        $this->bind('CadastroRequest', new CadastroRequest($usuarioService), new CadastroRequest($usuarioService));
-        $cadastroRequest = $this->resolve('CadastroRequest');
-
-        $this->bind('CadastroController', new CadastroController($cadastroRequest), new CadastroController($cadastroRequest));
+        $this->bind('DB', '\Infrastructure\Database\DatabaseConnection');
+        $this->bind('IUsuario', '\Infrastructure\Persistence\Repositories\Usuario\UsuarioRepository');
+        $this->bind('UsuarioService', '\Domain\Usuario\Services\UsuarioService');
+        $this->bind('CadastroRequest', '\app\FormRequest\Autenticacao\CadastroRequest');
+        $this->bind('CadastroController', '\app\http\controllers\CadastroController');
+        $this->bind('HomeController', '\app\http\controllers\HomeController');
 
 
         return match ($classe) {
-            'HomeController' => new HomeController(),
-            'CadastroController' => new CadastroController($cadastroRequest),
-            'CadastroRequest' => new CadastroRequest($usuarioService),
-            'UsuarioService' => $usuarioService,
+            'DB' => $this->resolve('DB'),
+            'IUsuario' => $this->resolve('IUsuario'),
+            'HomeController' => $this->resolve('HomeController'),
+            'CadastroController' => $this->resolve('CadastroController'),
+            'CadastroRequest' => $this->resolve('CadastroRequest'),
+            'UsuarioService' => $this->resolve('UsuarioService'),
             default => throw new \Exception("A classe inserida não está cadastrada no container")
         };
     }
