@@ -2,16 +2,18 @@
 
 namespace providers;
 
+use app\http\controllers\CadastroController;
 use app\http\controllers\HomeController;
-use app\infrastructe\mock\HomeNavLinks\NavLinks;
+use app\services\Autenticacao\CadastroService as appCadastroService;
 
-require 'infrastructure\mock\HomeNavLinks\NavLinks.php';
 require 'app\http\controllers\HomeController.php';
+require 'app\http\controllers\CadastroController.php';
+require 'app\services\Autenticacao\CadastroService.php';
 
 class Container
 {
     private $bindings = [];
-    public function bind(string $nomeClasse, object $classeAbstrata, object $classeConcreta) {
+    public function bind(string $nomeClasse, object $classeAbstrata, object $classeConcreta): void {
         $this->bindings[$nomeClasse]['classeAbstrata'] = $classeAbstrata;
         $this->bindings[$nomeClasse]['classeConcreta'] = $classeConcreta;
     }
@@ -28,12 +30,13 @@ class Container
      * @throws \Exception
      */
     public function register(string $classe): object {
-        $this->bind('NavLinks', new NavLinks(), new NavLinks());
+        $this->bind('app.CadastroService', new appCadastroService(), new appCadastroService());
 
-        $navLinks = $this->resolve('NavLinks');
+        $appCadastroService = $this->resolve('app.CadastroService');
 
         return match ($classe) {
-            'HomeController' => new HomeController($navLinks),
+            'HomeController' => new HomeController(),
+            'CadastroController' => new CadastroController($appCadastroService),
             default => throw new \Exception("A classe inserida não está cadastrada no container", 400)
         };
     }
