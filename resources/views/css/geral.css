@@ -1,4 +1,5 @@
 @import url('/resources/views/Home/style.css');
+@import url('/resources/views/Cadastro/style.css');
 @import url('/resources/views/componentes/navbar/style.css');
 @import url('/resources/views/componentes/footer/style.css');
 @import url('/resources/views/css/reset.css');
