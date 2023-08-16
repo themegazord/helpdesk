@@ -6,6 +6,8 @@ $router = new \routes\Router();
 
 
 $router->addRoute('/', 'HomeController', 'index');
+$router->addRoute('/cadastro', 'CadastroController', 'index');
+$router->addRoute('/cadastro-process', 'CadastroController', 'processaDadosCadastro');
 
 // Get the requested URL from the user
 $requestUrl = $_SERVER['REQUEST_URI'];
