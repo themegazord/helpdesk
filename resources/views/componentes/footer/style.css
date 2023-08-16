@@ -1,6 +1,9 @@
 .footer {
     text-align: center;
-    padding: 20px;
+    padding: 20px 0;
     background-color: var(--princeton-orange);
     color: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
