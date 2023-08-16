@@ -1,0 +1,112 @@
+.container-cadastro-usuario {
+    width: 100vw;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-cadastro-usuario {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 20%;
+    padding: 2rem 1rem;
+    background-color: var(--claret);
+}
+
+.titulo-form-cadastro-usuario {
+    color: var(--princeton-orange);
+    font-size: 3rem;
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: .5rem auto;
+}
+
+.label-nome-cadastro-usuario,
+.label-email-cadastro-usuario,
+.label-senha-cadastro-usuario {
+    width: 85%;
+    font-size: 1rem;
+    color: var(--princeton-orange);
+}
+
+.input-nome-cadastro-usuario,
+.input-email-cadastro-usuario,
+.input-senha-cadastro-usuario {
+    width: 85%;
+    margin-top: .25rem;
+    padding: .625rem;
+    border: 1px solid #b2b2b2;
+    outline: none;
+
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    -webkit-box-shadow: 0 1px .25rem 0 rgba(168, 168, 168, 0.6) inset;
+    box-shadow: 0 1px .25rem 0 rgba(168, 168, 168, 0.6) inset;
+
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.botao-cadastro {
+    background-color: var(--princeton-orange);
+    color: #fff;
+    width: 100%!important;
+    padding: .5rem .3125rem;
+    font-size: 1.25rem;
+    border: 1px solid transparent;
+    text-shadow: 0 1px 1px #333;
+    cursor: pointer;
+    margin: 1rem 0;
+    -webkit-border-radius: .625rem;
+    border-radius: .625rem;
+
+    transition: all 0.2s linear;
+}
+
+.botao-cadastro:hover {
+    background-color: var(--secundary-princeton-orange);
+}
+
+.footer-form-cadastro-usuario {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-form-cadastro-usuario p {
+    color: #ffffff;
+}
+
+.link-login-cadastro {
+    color: var(--princeton-orange);
+    transition: all 0.2s linear;
+}
+
+.link-login-cadastro:hover {
+    color: var(--secundary-princeton-orange);
+    text-decoration: none;
+}
+
+
+.notificacao-cadastro-usuario {
+    position: absolute;
+    top: 10vh;
+    right: 20px;
+    padding: 10px;
+    width: 15%;
+    background-color: var(--princeton-orange);
+    color: #fff;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
