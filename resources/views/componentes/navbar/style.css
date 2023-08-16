@@ -1,0 +1,36 @@
+#navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 7vh;
+    padding: 0 10%;
+    background-color: var(--princeton-orange);
+}
+
+#logo {
+    color: var(--chocolate-cosmos);
+}
+
+#nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.link {
+    color: var(--chocolate-cosmos);
+    font-size: 1.25rem;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: var(--carmine);
+}
