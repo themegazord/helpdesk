@@ -4,11 +4,13 @@ namespace providers;
 
 use app\http\controllers\CadastroController;
 use app\http\controllers\HomeController;
-use app\services\Autenticacao\CadastroService as appCadastroService;
+use app\FormRequest\Autenticacao\CadastroRequest;
+use Domain\Usuario\Services\UsuarioService;
 
 require 'app\http\controllers\HomeController.php';
 require 'app\http\controllers\CadastroController.php';
-require 'app\services\Autenticacao\CadastroService.php';
+require 'app\FormRequest\Autenticacao\CadastroRequest.php';
+require 'Domain\Usuario\Services\UsuarioService.php';
 
 class Container
 {
@@ -21,6 +23,14 @@ class Container
     public function resolve($nomeClasse): ?object {
         if (isset($this->bindings[$nomeClasse])) {
             $classeConcreta = $this->bindings[$nomeClasse]['classeConcreta'];
+            if ($nomeClasse == 'CadastroRequest') {
+                $usuarioService = $this->resolve('UsuarioService');
+                return new $classeConcreta($usuarioService);
+            }
+            if ($nomeClasse == 'CadastroController') {
+                $cadastroRequest = $this->resolve('CadastroRequest');
+                return new $classeConcreta($cadastroRequest);
+            }
             return new $classeConcreta();
         }
         return null;
@@ -30,14 +40,21 @@ class Container
      * @throws \Exception
      */
     public function register(string $classe): object {
-        $this->bind('app.CadastroService', new appCadastroService(), new appCadastroService());
+        $this->bind('UsuarioService', new UsuarioService(), new UsuarioService());
+        $usuarioService = $this->resolve('UsuarioService');
 
-        $appCadastroService = $this->resolve('app.CadastroService');
+        $this->bind('CadastroRequest', new CadastroRequest($usuarioService), new CadastroRequest($usuarioService));
+        $cadastroRequest = $this->resolve('CadastroRequest');
+
+        $this->bind('CadastroController', new CadastroController($cadastroRequest), new CadastroController($cadastroRequest));
+
 
         return match ($classe) {
             'HomeController' => new HomeController(),
-            'CadastroController' => new CadastroController($appCadastroService),
-            default => throw new \Exception("A classe inserida não está cadastrada no container", 400)
+            'CadastroController' => new CadastroController($cadastroRequest),
+            'CadastroRequest' => new CadastroRequest($usuarioService),
+            'UsuarioService' => $usuarioService,
+            default => throw new \Exception("A classe inserida não está cadastrada no container")
         };
     }
 }
