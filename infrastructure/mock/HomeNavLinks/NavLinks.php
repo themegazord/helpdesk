@@ -1,6 +1,6 @@
 <?php
 
-namespace app\infrastructe\mock\HomeNavLinks;
+namespace infrastructe\mock\HomeNavLinks;
 class NavLinks
 {
     public function links(): array {
