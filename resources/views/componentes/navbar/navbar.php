@@ -19,6 +19,13 @@
             /**
              * @var array $data
              */
+            use infrastructe\mock\HomeNavLinks\NavLinks;
+            require 'infrastructure\mock\HomeNavLinks\NavLinks.php';
+
+            $navLinks = new NavLinks();
+            $data = [
+                    'navlinks' => $navLinks->links(),
+            ];
             for ($i = 0; $i < count($data['navlinks']); $i += 1) {
                 echo "<li><a class='link' href='{$data['navlinks'][$i]['url']}'>{$data['navlinks'][$i]['label']}</a></li>";
             }
