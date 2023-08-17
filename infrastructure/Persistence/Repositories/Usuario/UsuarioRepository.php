@@ -16,8 +16,37 @@ class UsuarioRepository implements IUsuario
         $this->db = $this->connection->getPdo();
     }
 
-    public function cadastro(UsuarioDTO $usuarioDTO)
+    public function cadastro(UsuarioDTO $usuarioDTO): bool
     {
+        try {
+            $usuario_nome = $usuarioDTO->getNomeUsuario();
+            $usuario_email = $usuarioDTO->getEmailUsuario();
+            $usuario_senha = $usuarioDTO->getSenhaUsuario();
 
+            $stmt = $this->db->prepare("INSERT INTO usuarios(usuario_nome, usuario_email, usuario_senha) VALUES (:usuario_nome, :usuario_email , :usuario_senha)");
+
+            $stmt->bindParam(":usuario_nome", $usuario_nome, \PDO::PARAM_STR);
+            $stmt->bindParam(":usuario_email", $usuario_email, \PDO::PARAM_STR);
+            $stmt->bindParam(":usuario_senha", $usuario_senha, \PDO::PARAM_STR);
+
+            $stmt->execute();
+
+            return true;
+        } catch (\PDOException $e) {
+            echo "Erro no cadastro do usuario: " . $e->getMessage();
+        }
+    }
+
+    public function queryUsuarioPorEmail(string $email): string|array
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM usuarios WHERE usuario_email = :email");
+            $stmt->bindParam(":email", $email, \PDO::PARAM_STR);
+            $stmt->execute();
+
+            return $stmt->fetch(\PDO::FETCH_ASSOC);
+        } catch (\PDOException $e) {
+            return "Erro na consulta de usuarios por email: " . $e->getMessage();
+        }
     }
 }
