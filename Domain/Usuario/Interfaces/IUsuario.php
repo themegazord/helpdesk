@@ -7,4 +7,5 @@ use Domain\Usuario\DTO\UsuarioDTO;
 interface IUsuario
 {
     public function cadastro(UsuarioDTO $usuarioDTO);
+    public function queryUsuarioPorEmail(string $email);
 }
