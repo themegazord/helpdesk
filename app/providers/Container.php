@@ -1,6 +1,6 @@
 <?php
 
-namespace providers;
+namespace app\providers;
 
 use app\http\controllers\CadastroController;
 use app\http\controllers\HomeController;
@@ -9,12 +9,7 @@ use Infrastructure\Database\DatabaseConnection;
 use Domain\Usuario\Services\UsuarioService;
 use Infrastructure\Persistence\Repositories\Usuario\UsuarioRepository;
 
-require 'app\http\controllers\HomeController.php';
-require 'app\http\controllers\CadastroController.php';
-require 'app\FormRequest\Autenticacao\CadastroRequest.php';
-require 'Domain\Usuario\Services\UsuarioService.php';
-require 'Infrastructure\Persistence\Repositories\Usuario\UsuarioRepository.php';
-require 'Infrastructure\Database\DatabaseConnection.php';
+require_once 'vendor/autoload.php';
 
 class Container
 {
@@ -52,12 +47,12 @@ class Container
      * @throws \Exception
      */
     public function register(string $classe): object {
-        $this->bind('DB', '\Infrastructure\Database\DatabaseConnection');
-        $this->bind('IUsuario', '\Infrastructure\Persistence\Repositories\Usuario\UsuarioRepository');
-        $this->bind('UsuarioService', '\Domain\Usuario\Services\UsuarioService');
-        $this->bind('CadastroRequest', '\app\FormRequest\Autenticacao\CadastroRequest');
-        $this->bind('CadastroController', '\app\http\controllers\CadastroController');
-        $this->bind('HomeController', '\app\http\controllers\HomeController');
+        $this->bind('DB', 'infrastructure\Database\DatabaseConnection');
+        $this->bind('IUsuario', 'infrastructure\Persistence\Repositories\Usuario\UsuarioRepository');
+        $this->bind('UsuarioService', 'Domain\Usuario\Services\UsuarioService');
+        $this->bind('CadastroRequest', 'app\FormRequest\Autenticacao\CadastroRequest');
+        $this->bind('CadastroController', 'app\http\controllers\CadastroController');
+        $this->bind('HomeController', 'app\http\controllers\HomeController');
 
 
         return match ($classe) {

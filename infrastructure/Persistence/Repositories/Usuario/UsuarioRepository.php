@@ -6,8 +6,7 @@ use Infrastructure\Database\DatabaseConnection;
 use Domain\Usuario\DTO\UsuarioDTO;
 use Domain\Usuario\Interfaces\IUsuario;
 
-require 'Domain\Usuario\Interfaces\IUsuario.php';
-
+require_once 'vendor/autoload.php';
 class UsuarioRepository implements IUsuario
 {
     private $db;

@@ -7,8 +7,8 @@ use app\FormRequest\Autenticacao\CadastroRequest;
 use Domain\Usuario\DTO\UsuarioDTO;
 use Domain\Usuario\Exceptions\UsuarioException;
 
-require 'Domain\Usuario\DTO\UsuarioDTO.php';
 
+require_once 'vendor/autoload.php';
 class CadastroController
 {
     public function __construct(

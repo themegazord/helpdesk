@@ -6,8 +6,8 @@ use Domain\Usuario\DTO\UsuarioDTO;
 use Domain\Usuario\Exceptions\UsuarioException;
 use Domain\Usuario\Services\UsuarioService;
 
-require 'Domain\Usuario\Exceptions\UsuarioException.php';
 
+require_once 'vendor/autoload.php';
 class CadastroRequest
 {
     public function __construct(private readonly UsuarioService $usuarioService)

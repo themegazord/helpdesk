@@ -2,9 +2,9 @@
 
 namespace routes;
 
-use providers\Container;
+use app\providers\Container;
 
-require 'app\providers\Container.php';
+require_once 'vendor\autoload.php';
 
 class Router {
     private $routes = [];
