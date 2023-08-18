@@ -7,6 +7,7 @@ use app\FormRequest\Autenticacao\CadastroRequest;
 use Domain\Usuario\DTO\UsuarioDTO;
 use Domain\Usuario\Exceptions\UsuarioException;
 
+require 'routes\routeHelpers.php';
 
 require_once 'vendor/autoload.php';
 class CadastroController
@@ -30,7 +31,9 @@ class CadastroController
             $novoUsuario->setSenhaUsuario($_POST['senha-cadastro']);
 
             try {
-                $this->cadastroRequest->dispatch($novoUsuario);
+                if ($this->cadastroRequest->dispatch($novoUsuario)) {
+                    redirect('/cadastro/validaemail');
+                }
             } catch (UsuarioException $ue) {
                 $errosCadastroForm = [
                     'erros' => [$ue->getMessage()]
@@ -38,5 +41,9 @@ class CadastroController
                 include 'resources\views\Cadastro\CadastroView.php';
             }
         }
+    }
+
+    public function validaEmail(): void {
+        include 'resources\views\ValidaEmail\ValidaEmail.php';
     }
 }
