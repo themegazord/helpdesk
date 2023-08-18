@@ -1,0 +1,79 @@
+#container-valida-email {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 85vh;
+}
+
+.container-form-valida-email {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 30%;
+    height: 50%;
+    background-color: var(--princeton-orange);
+    border-radius: 1rem;
+    gap: 3rem;
+}
+
+.header-valida-email {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.form-valida-email {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.label-email-valida-email {
+    width: 85%;
+    font-size: 1rem;
+}
+
+.input-email-valida-email {
+    width: 85%;
+    margin-top: .25rem;
+    padding: .625rem;
+    border: 1px solid #b2b2b2;
+    outline: none;
+
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    -webkit-box-shadow: 0 1px .25rem 0 rgba(168, 168, 168, 0.6) inset;
+    box-shadow: 0 1px .25rem 0 rgba(168, 168, 168, 0.6) inset;
+
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.botao-valida-email {
+    background-color: #ffffff;
+    color: var(--carmine);
+    width: 85%!important;
+    padding: .5rem .3125rem;
+    font-size: 1.25rem;
+    border: 1px solid transparent;
+    text-shadow: 0 1px 1px #333;
+    cursor: pointer;
+    margin: 1rem 0;
+    -webkit-border-radius: .625rem;
+    border-radius: .625rem;
+
+    transition: all 0.2s linear;
+}
+
+.info-valida-email {
+    text-align: center;
+}
