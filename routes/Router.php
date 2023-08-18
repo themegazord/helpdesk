@@ -7,9 +7,9 @@ use app\providers\Container;
 require_once 'vendor\autoload.php';
 
 class Router {
-    private $routes = [];
+    private array $routes = [];
 
-    public function addRoute($url, $controller, $method) {
+    public function addRoute($url, $controller, $method): void {
         $this->routes[$url] = ['controller' => $controller, 'method' => $method];
     }
 
@@ -17,7 +17,7 @@ class Router {
      * @throws \ReflectionException
      * @throws \Exception
      */
-    public function route($url) {
+    public function route($url): void {
         $container = new Container();
         if (isset($this->routes[$url])) {
             $route = $this->routes[$url];
