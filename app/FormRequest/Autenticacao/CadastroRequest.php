@@ -18,12 +18,10 @@ class CadastroRequest
     /**
      * @throws UsuarioException
      */
-    public function dispatch(UsuarioDTO $usuario): void
+    public function dispatch(UsuarioDTO $usuario): bool
     {
         $usuario->setEmailUsuario($this->validaEmail($usuario->getEmailUsuario()));
-        if ($this->usuarioService->cadastro($usuario)) {
-            include 'resources/views/Home/HomeView.php';
-        }
+        return $this->usuarioService->cadastro($usuario);
     }
 
     /**
