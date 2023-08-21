@@ -18,7 +18,7 @@ class CadastroRequest
     /**
      * @throws UsuarioException
      */
-    public function dispatch(UsuarioDTO $usuario): bool
+    public function dispatch(UsuarioDTO $usuario): string
     {
         $usuario->setEmailUsuario($this->validaEmail($usuario->getEmailUsuario()));
         return $this->usuarioService->cadastro($usuario);
