@@ -6,6 +6,6 @@ use Domain\Usuario\DTO\UsuarioDTO;
 
 interface IUsuario
 {
-    public function cadastro(UsuarioDTO $usuarioDTO);
+    public function cadastro(UsuarioDTO $usuarioDTO): string;
     public function queryUsuarioPorEmail(string $email);
 }
