@@ -36,7 +36,8 @@ class Container
             }
             if ($nomeClasse == 'CadastroController') {
                 $cadastroRequest = $this->resolve('CadastroRequest');
-                return new $classeConcreta($cadastroRequest);
+                $usuarioService = $this->resolve('UsuarioService');
+                return new $classeConcreta($cadastroRequest, $usuarioService);
             }
             return new $classeConcreta();
         }
