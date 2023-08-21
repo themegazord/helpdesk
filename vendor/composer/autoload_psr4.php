@@ -8,7 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'routes\\' => array($baseDir . '/routes'),
     'resources\\' => array($baseDir . '/resources'),
+    'phpseclib3\\' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'infrastructure\\' => array($baseDir . '/infrastructure'),
     'app\\' => array($baseDir . '/app'),
+    'PhpAmqpLib\\' => array($vendorDir . '/php-amqplib/php-amqplib/PhpAmqpLib'),
+    'ParagonIE\\ConstantTime\\' => array($vendorDir . '/paragonie/constant_time_encoding/src'),
     'Domain\\' => array($baseDir . '/Domain'),
 );
