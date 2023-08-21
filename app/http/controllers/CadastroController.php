@@ -7,6 +7,8 @@ use app\FormRequest\Autenticacao\CadastroRequest;
 use Domain\Usuario\Services\UsuarioService;
 use Domain\Usuario\DTO\UsuarioDTO;
 use Domain\Usuario\Exceptions\UsuarioException;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 require 'routes\routeHelpers.php';
 
@@ -34,6 +36,7 @@ class CadastroController
 
             try {
                 $emailUsuarioNovo = $this->cadastroRequest->dispatch($novoUsuario);
+                $this->logCadastroUsuario($emailUsuarioNovo);
                 $hashEmail = base64_encode($emailUsuarioNovo);
                 if (!empty($emailUsuarioNovo)) {
                     redirect('/cadastro/validaemail?usuario=' . $hashEmail);
@@ -41,6 +44,11 @@ class CadastroController
             } catch (UsuarioException $ue) {
                 $errosCadastroForm = [
                     'erros' => [$ue->getMessage()]
+                ];
+                include 'resources\views\Cadastro\CadastroView.php';
+            } catch (\Exception $e) {
+                $errosCadastroForm = [
+                    'erros' => [$e->getMessage()]
                 ];
                 include 'resources\views\Cadastro\CadastroView.php';
             }
@@ -53,5 +61,26 @@ class CadastroController
             redirect('/');
         };
         include 'resources\views\ValidaEmail\ValidaEmail.php';
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function logCadastroUsuario(string $email): void {
+        $conexaoMensageria = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+        $canal = $conexaoMensageria->channel();
+
+        $canal->queue_declare('cadastroUsuario', false, true, false, false);
+        $data = 'nivel=INFO;mensagem=INSERT: O usuário portador do email -> ' . $email . ' cadastrado com sucesso';
+
+        $msg = new AMQPMessage(
+            $data,
+            array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
+        );
+
+        $canal->basic_publish($msg, '', 'cadastroUsuario');
+
+        $canal->close();
+        $conexaoMensageria->close();
     }
 }
