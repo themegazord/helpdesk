@@ -12,13 +12,13 @@ class UsuarioService
     {
     }
 
-    public function cadastro(UsuarioDTO $usuarioDTO): UsuarioException|bool {
+    public function cadastro(UsuarioDTO $usuarioDTO): UsuarioException|string {
         if (!empty($this->consultaEmailExistente($usuarioDTO->getEmailUsuario()))) return UsuarioException::emailExistente($usuarioDTO->getEmailUsuario());
         $usuarioDTO->setSenhaUsuario($this->criptografaSenha($usuarioDTO->getSenhaUsuario()));
         return $this->usuarioRepository->cadastro($usuarioDTO);
     }
 
-    private function consultaEmailExistente(string $email): string|array {
+    public function consultaEmailExistente(string $email): string|array {
         return $this->usuarioRepository->queryUsuarioPorEmail($email);
     }
 
