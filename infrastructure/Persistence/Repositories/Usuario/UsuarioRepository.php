@@ -15,7 +15,7 @@ class UsuarioRepository implements IUsuario
         $this->db = $this->connection->getPdo();
     }
 
-    public function cadastro(UsuarioDTO $usuarioDTO): bool
+    public function cadastro(UsuarioDTO $usuarioDTO): string
     {
         try {
             $usuario_nome = $usuarioDTO->getNomeUsuario();
@@ -30,7 +30,8 @@ class UsuarioRepository implements IUsuario
 
             $stmt->execute();
 
-            return true;
+            return $usuario_email;
+
         } catch (\PDOException $e) {
             echo "Erro no cadastro do usuario: " . $e->getMessage();
         }
