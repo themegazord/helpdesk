@@ -7,7 +7,7 @@ class EnvioEmailDTO
     private string $destinatario;
     private string $corpo;
     private string $titulo;
-    private array $cabecalho;
+    private string $cabecalho;
 
     public function getDestinatario(): string
     {
@@ -44,7 +44,7 @@ class EnvioEmailDTO
         $this->titulo = $titulo;
     }
 
-    public function setCabecalho(array $cabecalho): void
+    public function setCabecalho(string $cabecalho): void
     {
         $this->cabecalho = $cabecalho;
     }
