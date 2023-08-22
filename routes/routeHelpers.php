@@ -6,7 +6,7 @@ use JetBrains\PhpStorm\NoReturn;
     if (is_null($params)) {
         header("Location: $url");
     } else {
-        header("Location: $url/$params");
+        header("Location: $url?$params");
     }
     exit();
 }
