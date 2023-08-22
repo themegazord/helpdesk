@@ -1,11 +1,13 @@
 <?php include 'resources\views\componentes\navbar\navbar.php'; ?>
+<?php include 'resources\views\componentes\notificacao\notificacao.php'; ?>
     <div id="container-valida-email">
         <div class="container-form-valida-email">
             <div class="header-valida-email">
                 <h1 class="titulo-valida-email">Validação de Email</h1>
                 <p class="sub-titulo-valida-email">Insira o código que foi encaminhado para o seu email.</p>
             </div>
-            <form action="/cadastro/validaemail/process" method="post" class="form-valida-email">
+            <form action="/cadastro/validaemail-process" method="post" class="form-valida-email">
+                <input type="hidden" name="hash" value="<?php echo $_GET['usuario'] ?>">
                 <label for="cod" class="label-cod-valida-email">Código:</label>
                 <input type="cod" id="cod" name="cod" class="input-cod-valida-email" required>
                 <br>
