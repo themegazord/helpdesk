@@ -61,4 +61,16 @@ class UsuarioRepository implements IUsuario
             echo "Erro ao inserir código de verificação: " . $e->getMessage();
         }
     }
+
+    public function atualizaStatusVerificado(string $email, string $verificado): void
+    {
+        try {
+            $stmt = $this->db->prepare('UPDATE usuarios SET verificado = :verificado WHERE usuario_email = :usuario_email');
+            $stmt->bindParam(":verificado", $verificado);
+            $stmt->bindParam(":usuario_email", $email);
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            echo "Erro ao atualizar o status de verificado do usuario: {$e->getMessage()}";
+        }
+    }
 }
