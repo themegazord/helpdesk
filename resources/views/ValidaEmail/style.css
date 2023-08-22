@@ -36,12 +36,12 @@
     width: 100%;
 }
 
-.label-email-valida-email {
+.label-cod-valida-email {
     width: 85%;
     font-size: 1rem;
 }
 
-.input-email-valida-email {
+.input-cod-valida-email {
     width: 85%;
     margin-top: .25rem;
     padding: .625rem;
