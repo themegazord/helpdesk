@@ -35,10 +35,11 @@ class CadastroController
             $novoUsuario->setSenhaUsuario($_POST['senha-cadastro']);
 
             try {
-                $emailUsuarioNovo = $this->cadastroRequest->dispatch($novoUsuario);
-                $this->logCadastroUsuario($emailUsuarioNovo);
-                $hashEmail = base64_encode($emailUsuarioNovo);
-                if (!empty($emailUsuarioNovo)) {
+                $usuario = $this->cadastroRequest->dispatch($novoUsuario);
+                $this->logCadastroUsuario($usuario['email']);
+                $hashEmail = base64_encode($usuario['email']);
+                $this->envioEmail($usuario['email'], $usuario['codigo_verificacao']);
+                if (!empty($usuario['email'])) {
                     redirect('/cadastro/validaemail?usuario=' . $hashEmail);
                 }
             } catch (UsuarioException $ue) {
@@ -82,5 +83,26 @@ class CadastroController
 
         $canal->close();
         $conexaoMensageria->close();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function envioEmail(string $email, int $codigo): void {
+        $conexao = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+        $canal = $conexao->channel();
+
+        $canal->queue_declare('emailCodigoVerificacao', false, true, false, false);
+        $data = "email=" . $email . ";codigo=" . $codigo;
+
+        $msg = new AMQPMessage(
+            $data,
+            array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
+        );
+
+        $canal->basic_publish($msg, '', 'emailCodigoVerificacao');
+
+        $canal->close();
+        $conexao->close();
     }
 }
