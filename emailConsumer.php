@@ -1,16 +1,19 @@
 <?php
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use Domain\EnvioEmail\Services\EnvioEmailService;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+$envioEmail = new EnvioEmailService();
 $conexao = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
 $canal = $conexao->channel();
 
 $canal->queue_declare('emailCodigoVerificacao', false, true, false, false);
 
-$callback = function ($msg) {
+$callback = function ($msg) use (&$envioEmail) {
     echo "Mensagem recebida...\n";
+    $envioEmail->enviaCodigoVerificacao($msg->body);
     echo $msg->body;
     echo "\nResposta enviada...\n";
     $msg->ack();
