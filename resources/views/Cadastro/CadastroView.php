@@ -1,12 +1,5 @@
 <?php include 'resources\views\componentes\navbar\navbar.php'; ?>
-
-<?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-    <?php if(isset($errosCadastroForm['erros'])): ?>
-        <div id='notificacao-cadastro-usuario' class='notificacao-cadastro-usuario'>
-            <p><?=$errosCadastroForm['erros'][0]; ?></p>
-        </div>
-    <?php endif; ?>
-<?php endif; ?>
+<?php include 'resources\views\componentes\notificacao\notificacao.php'; ?>
     <div class="container-cadastro-usuario">
         <form method="post" action="/cadastro-process" class="form-cadastro-usuario">
 
