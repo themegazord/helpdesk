@@ -2,7 +2,6 @@
 
 namespace app\http\controllers;
 
-
 use app\FormRequest\Autenticacao\CadastroRequest;
 use Domain\Usuario\Services\UsuarioService;
 use Domain\Usuario\DTO\UsuarioDTO;
@@ -40,24 +39,22 @@ class CadastroController
                 $hashEmail = base64_encode($usuario['email']);
                 $this->envioEmail($usuario['email'], $usuario['codigo_verificacao']);
                 if (!empty($usuario['email'])) {
-                    redirect('/cadastro/validaemail?usuario=' . $hashEmail);
+                    redirect("/cadastro/validaemail?usuario={$hashEmail}");
                 }
             } catch (UsuarioException $ue) {
-                $errosCadastroForm = [
-                    'erros' => [$ue->getMessage()]
-                ];
-                include 'resources\views\Cadastro\CadastroView.php';
+                redirect('/cadastro' . urlencode($ue->getMessage()));
             } catch (\Exception $e) {
-                $errosCadastroForm = [
-                    'erros' => [$e->getMessage()]
-                ];
-                include 'resources\views\Cadastro\CadastroView.php';
+                redirect("/cadastro?erro=".urlencode($e->getMessage()));
             }
         }
     }
 
-    public function validaEmail(string $emailHash): void {
-        $usuario = $this->usuarioService->consultaEmailExistente(base64_decode($emailHash));
+    public function validaEmail(string $emailHash, string $notify = null): void {
+        $usuario = $this->usuarioService->consultaEmailExistente(
+            str_contains($emailHash, 'usuario=')
+            ? base64_decode(explode('=', ($emailHash))[1])
+            : base64_decode($emailHash)
+        );
         if (empty($usuario)) {
             redirect('/');
         };
@@ -67,6 +64,17 @@ class CadastroController
     /**
      * @throws \Exception
      */
+
+    public function procassaDadosValidaEmail(): void{
+        $codigo = $_POST['cod'];
+        $hash = $_POST['hash'];
+        try {
+            $this->usuarioService->validaCodigoVerificacao($hash, $codigo);
+            redirect('/');
+        } catch (UsuarioException $e) {
+            redirect("/cadastro/validaemail?usuario={$hash}&erro={$e->getMessage()}");
+        }
+    }
     private function logCadastroUsuario(string $email): void {
         $conexaoMensageria = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
         $canal = $conexaoMensageria->channel();
