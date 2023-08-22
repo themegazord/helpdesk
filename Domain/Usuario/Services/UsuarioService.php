@@ -23,6 +23,19 @@ class UsuarioService
         ];
     }
 
+    /**
+     * @throws UsuarioException
+     */
+    public function validaCodigoVerificacao(string $hash, int $cod): bool|UsuarioException {
+        $usuario = $this->consultaEmailExistente(base64_decode($hash));
+        if(!$usuario['codigo_verificacao'] == $cod) {
+            return UsuarioException::codigoDifereDoEmail();
+        }
+        $this->atualizaStatusVerificado($usuario['usuario_email'], 'S');
+        return true;
+
+    }
+
     public function consultaEmailExistente(string $email): string|array {
         return $this->usuarioRepository->queryUsuarioPorEmail($email);
     }
@@ -38,5 +51,9 @@ class UsuarioService
         $this->usuarioRepository->adicionaCodigoDeVerificacao($codigo, $email);
 
         return $codigo;
+    }
+
+    private function atualizaStatusVerificado(string $email, string $verificado): void {
+        $this->usuarioRepository->atualizaStatusVerificado($email, $verificado);
     }
 }
