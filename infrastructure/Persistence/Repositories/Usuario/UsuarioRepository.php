@@ -49,4 +49,16 @@ class UsuarioRepository implements IUsuario
             return "Erro na consulta de usuarios por email: " . $e->getMessage();
         }
     }
+
+    public function adicionaCodigoDeVerificacao(int $codigo, string $email): void
+    {
+        try {
+            $stmt = $this->db->prepare("UPDATE usuarios SET codigo_verificacao = :codigo_verificacao WHERE usuario_email = :usuario_email");
+            $stmt->bindParam(":codigo_verificacao", $codigo);
+            $stmt->bindParam(":usuario_email", $email);
+            $stmt->execute();
+        } catch (\PDOException $e) {
+            echo "Erro ao inserir código de verificação: " . $e->getMessage();
+        }
+    }
 }
