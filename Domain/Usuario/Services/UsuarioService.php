@@ -12,10 +12,15 @@ class UsuarioService
     {
     }
 
-    public function cadastro(UsuarioDTO $usuarioDTO): UsuarioException|string {
+    public function cadastro(UsuarioDTO $usuarioDTO): UsuarioException|array {
         if (!empty($this->consultaEmailExistente($usuarioDTO->getEmailUsuario()))) return UsuarioException::emailExistente($usuarioDTO->getEmailUsuario());
         $usuarioDTO->setSenhaUsuario($this->criptografaSenha($usuarioDTO->getSenhaUsuario()));
-        return $this->usuarioRepository->cadastro($usuarioDTO);
+        $email = $this->usuarioRepository->cadastro($usuarioDTO);
+        $codigo = $this->gerarCodigoVerificacao($email);
+        return [
+            'email' => $email,
+            'codigo_verificacao' => $codigo
+        ];
     }
 
     public function consultaEmailExistente(string $email): string|array {
@@ -24,5 +29,14 @@ class UsuarioService
 
     private function criptografaSenha(string $senha): string {
         return password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
+    }
+
+    private function gerarCodigoVerificacao(string $email): int {
+        $usuario = $this->consultaEmailExistente($email);
+        $codigo = mt_rand(100000, 999999);
+
+        $this->usuarioRepository->adicionaCodigoDeVerificacao($codigo, $email);
+
+        return $codigo;
     }
 }
