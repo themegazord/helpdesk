@@ -1,7 +1,5 @@
 <?php
 
-namespace servidoresInternos;
-
 use Domain\Log\DTO\LogDTO;
 use Domain\Log\Services\LogService;
 use infrastructure\Persistence\Repositories\Log\LogRepository;
@@ -38,6 +36,6 @@ while($canal->is_open()) {
     $canal->wait();
 }
 
-$conexao->close();
 $canal->close();
+$conexao->close();
 
