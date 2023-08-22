@@ -18,9 +18,15 @@ class Router {
 
     public function route($url): void {
         $container = new Container();
-        $param = null;
+        $params = null;
+        $notify = null;
         if (str_contains($url, '?')) {
-            $param = explode('=', explode('?', $url)[1])[1];
+            if(str_contains($url, '&')) {
+                $params = explode('&', explode('?', $url)[1])[0];
+                $notify = explode('&', explode('?', $url)[1])[1];
+            } else {
+                $params = explode('=', explode('?', $url)[1])[1];
+            }
             $url = explode('?', $url)[0];
         }
         if (isset($this->routes[$url])) {
@@ -29,7 +35,7 @@ class Router {
             $methodName = $route['method'];
 
             $controller = $controllerName;
-            $controller->$methodName($param);
+            $controller->$methodName($params, $notify);
         } else {
             var_dump("404 - Page not found");
         }
