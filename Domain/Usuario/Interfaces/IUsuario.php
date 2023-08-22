@@ -8,4 +8,6 @@ interface IUsuario
 {
     public function cadastro(UsuarioDTO $usuarioDTO): string;
     public function queryUsuarioPorEmail(string $email);
+
+    public function adicionaCodigoDeVerificacao(int $codigo, string $email): void;
 }
