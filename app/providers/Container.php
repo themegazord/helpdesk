@@ -69,6 +69,7 @@ class Container
         // Services
         $this->bind('UsuarioService', 'Domain\Usuario\Services\UsuarioService');
         $this->bind('LogService', 'Domain\Log\Services\LogService');
+        $this->bind('EnvioEmailService', 'Domain\EnvioEmail\Services\EnvioEmailService');
         // Form Requests
         $this->bind('CadastroRequest', 'app\FormRequest\Autenticacao\CadastroRequest');
         // Controllers
@@ -85,6 +86,7 @@ class Container
             // Services
             'UsuarioService' => $this->resolve('UsuarioService'),
             'LogService' => $this->resolve('LogService'),
+            'EnvioEmailService' => $this->resolve('EnvioEmailService'),
             // Form Request
             'CadastroRequest' => $this->resolve('CadastroRequest'),
             // Controllers
