@@ -19,6 +19,7 @@ class CadastroController
         private readonly UsuarioService $usuarioService
     )
     {
+        session_start();
     }
 
     public function index(): void {
