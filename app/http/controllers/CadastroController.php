@@ -3,11 +3,11 @@
 namespace app\http\controllers;
 
 use app\FormRequest\Autenticacao\CadastroRequest;
+use Domain\EnvioEmail\Services\EnvioEmailService;
+use Domain\Log\Services\LogService;
 use Domain\Usuario\Services\UsuarioService;
 use Domain\Usuario\DTO\UsuarioDTO;
 use Domain\Usuario\Exceptions\UsuarioException;
-use PhpAmqpLib\Connection\AMQPStreamConnection;
-use PhpAmqpLib\Message\AMQPMessage;
 
 require 'routes\routeHelpers.php';
 
@@ -16,7 +16,9 @@ class CadastroController
 {
     public function __construct(
         private readonly CadastroRequest $cadastroRequest,
-        private readonly UsuarioService $usuarioService
+        private readonly UsuarioService $usuarioService,
+        private readonly LogService $logService,
+        private readonly EnvioEmailService $emailService
     )
     {
         session_start();
@@ -36,9 +38,9 @@ class CadastroController
 
             try {
                 $usuario = $this->cadastroRequest->dispatch($novoUsuario);
-                $this->logCadastroUsuario($usuario['email']);
+                $this->logService->logCadastroUsuario('nivel=INFO;mensagem=INSERT: O usuário portador do email -> ' . $usuario['email'] . ' cadastrado com sucesso', 'cadastroUsuario');
                 $hashEmail = base64_encode($usuario['email']);
-                $this->envioEmail($usuario['email'], $usuario['codigo_verificacao']);
+                $this->emailService->envioEmail("email=" . $usuario['email'] . ";codigo=" . $usuario['codigo_verificacao'], 'emailCodigoVerificacao');
                 if (!empty($usuario['email'])) {
                     redirect("/cadastro/validaemail?usuario={$hashEmail}");
                 }
@@ -62,10 +64,6 @@ class CadastroController
         include 'resources\views\ValidaEmail\ValidaEmail.php';
     }
 
-    /**
-     * @throws \Exception
-     */
-
     public function procassaDadosValidaEmail(): void{
         $codigo = $_POST['cod'];
         $hash = $_POST['hash'];
@@ -75,43 +73,5 @@ class CadastroController
         } catch (UsuarioException $e) {
             redirect("/cadastro/validaemail?usuario={$hash}&erro={$e->getMessage()}");
         }
-    }
-    private function logCadastroUsuario(string $email): void {
-        $conexaoMensageria = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-        $canal = $conexaoMensageria->channel();
-
-        $canal->queue_declare('cadastroUsuario', false, true, false, false);
-        $data = 'nivel=INFO;mensagem=INSERT: O usuário portador do email -> ' . $email . ' cadastrado com sucesso';
-
-        $msg = new AMQPMessage(
-            $data,
-            array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
-        );
-
-        $canal->basic_publish($msg, '', 'cadastroUsuario');
-
-        $canal->close();
-        $conexaoMensageria->close();
-    }
-
-    /**
-     * @throws \Exception
-     */
-    private function envioEmail(string $email, int $codigo): void {
-        $conexao = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-        $canal = $conexao->channel();
-
-        $canal->queue_declare('emailCodigoVerificacao', false, true, false, false);
-        $data = "email=" . $email . ";codigo=" . $codigo;
-
-        $msg = new AMQPMessage(
-            $data,
-            array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
-        );
-
-        $canal->basic_publish($msg, '', 'emailCodigoVerificacao');
-
-        $canal->close();
-        $conexao->close();
     }
 }

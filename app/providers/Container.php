@@ -56,7 +56,9 @@ class Container
             if ($nomeClasse == 'CadastroController') {
                 $cadastroRequest = $this->resolve('CadastroRequest');
                 $usuarioService = $this->resolve('UsuarioService');
-                return new $classeConcreta($cadastroRequest, $usuarioService);
+                $logService = $this->resolve('LogService');
+                $envioEmailService = $this->resolve('EnvioEmailService');
+                return new $classeConcreta($cadastroRequest, $usuarioService, $logService, $envioEmailService);
             }
             if ($nomeClasse == 'LoginController') {
                 $loginRequest = $this->resolve('LoginRequest');
