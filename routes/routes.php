@@ -10,6 +10,7 @@ $router->addRoute('/cadastro', 'CadastroController', 'index');
 $router->addRoute('/cadastro-process', 'CadastroController', 'processaDadosCadastro');
 $router->addRoute('/cadastro/validaemail', 'CadastroController', 'validaEmail');
 $router->addRoute('/cadastro/validaemail-process', 'CadastroController', 'procassaDadosValidaEmail');
+$router->addRoute('/login', 'LoginController', 'index');
 
 // Get the requested URL from the user
 $requestUrl = $_SERVER['REQUEST_URI'];
