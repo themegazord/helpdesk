@@ -28,7 +28,7 @@ class UsuarioService
      */
     public function validaCodigoVerificacao(string $hash, int $cod): bool|UsuarioException {
         $usuario = $this->consultaEmailExistente(base64_decode($hash));
-        if(!$usuario['codigo_verificacao'] == $cod) {
+        if($usuario['codigo_verificacao'] != $cod) {
             return UsuarioException::codigoDifereDoEmail();
         }
         $this->atualizaStatusVerificado($usuario['usuario_email'], 'S');
