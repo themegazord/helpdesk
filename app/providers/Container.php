@@ -2,9 +2,11 @@
 
 namespace app\providers;
 
+use app\http\controllers\LoginController;
 use app\http\controllers\CadastroController;
 use app\http\controllers\HomeController;
 use app\FormRequest\Autenticacao\CadastroRequest;
+use app\FormRequest\Autenticacao\LoginRequest;
 use Infrastructure\Database\DatabaseConnection;
 use Domain\Usuario\Services\UsuarioService;
 use Domain\Log\Services\LogService;
@@ -46,11 +48,19 @@ class Container
                 $usuarioService = $this->resolve('UsuarioService');
                 return new $classeConcreta($usuarioService);
             }
+            if ($nomeClasse == 'LoginRequest') {
+                $usuarioService = $this->resolve('UsuarioService');
+                return new $classeConcreta($usuarioService);
+            }
             // Controllers
             if ($nomeClasse == 'CadastroController') {
                 $cadastroRequest = $this->resolve('CadastroRequest');
                 $usuarioService = $this->resolve('UsuarioService');
                 return new $classeConcreta($cadastroRequest, $usuarioService);
+            }
+            if ($nomeClasse == 'LoginController') {
+                $loginRequest = $this->resolve('LoginRequest');
+                return new $classeConcreta($loginRequest);
             }
             return new $classeConcreta();
         }
@@ -72,6 +82,7 @@ class Container
         $this->bind('EnvioEmailService', 'Domain\EnvioEmail\Services\EnvioEmailService');
         // Form Requests
         $this->bind('CadastroRequest', 'app\FormRequest\Autenticacao\CadastroRequest');
+        $this->bind('LoginRequest', 'app\FormRequest\Autenticacao\LoginRequest');
         // Controllers
         $this->bind('CadastroController', 'app\http\controllers\CadastroController');
         $this->bind('HomeController', 'app\http\controllers\HomeController');
@@ -90,6 +101,7 @@ class Container
             'EnvioEmailService' => $this->resolve('EnvioEmailService'),
             // Form Request
             'CadastroRequest' => $this->resolve('CadastroRequest'),
+            'LoginRequest' => $this->resolve('LoginRequest'),
             // Controllers
             'HomeController' => $this->resolve('HomeController'),
             'CadastroController' => $this->resolve('CadastroController'),
