@@ -42,7 +42,7 @@ class CadastroController
                     redirect("/cadastro/validaemail?usuario={$hashEmail}");
                 }
             } catch (UsuarioException $ue) {
-                redirect('/cadastro' . urlencode($ue->getMessage()));
+                redirect('/cadastro?erro=' . urlencode($ue->getMessage()));
             } catch (\Exception $e) {
                 redirect("/cadastro?erro=".urlencode($e->getMessage()));
             }
