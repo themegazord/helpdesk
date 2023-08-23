@@ -3,6 +3,8 @@
 namespace Domain\EnvioEmail\Services;
 
 use Domain\EnvioEmail\DTO\EnvioEmailDTO;
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -69,5 +71,29 @@ class EnvioEmailService
         }catch(\Exception $e) {
             echo "Mensagem não pode ser enviada. Mailler error: {$phpMailler->ErrorInfo} \n";
         }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function envioEmail(string $data, string $queue): void {
+        $conexao = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+        $canal = $conexao->channel();
+
+        match ($queue) {
+            'emailCodigoVerificacao' => $canal->queue_declare('emailCodigoVerificacao', false, true, false, false)
+        };
+
+        $msg = new AMQPMessage(
+            $data,
+            array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
+        );
+
+        match ($queue) {
+            'emailCodigoVerificacao' => $canal->basic_publish($msg, '', 'emailCodigoVerificacao')
+        };
+
+        $canal->close();
+        $conexao->close();
     }
 }
