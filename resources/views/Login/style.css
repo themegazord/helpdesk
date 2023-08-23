@@ -1,0 +1,68 @@
+.container-login {
+    height: 85vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-login {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem 1rem;
+    background-color: var(--claret);
+}
+
+.titulo-form-login {
+    color: var(--princeton-orange);
+    font-size: 3rem;
+}
+
+.label-email-login,
+.label-senha-login {
+    width: 85%;
+    font-size: 1rem;
+    color: var(--princeton-orange);
+}
+
+.input-email-login,
+.input-senha-login {
+    width: 85%;
+    margin-top: .25rem;
+    padding: .625rem;
+    border: 1px solid #b2b2b2;
+    outline: none;
+
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+
+    -webkit-box-shadow: 0 1px .25rem 0 rgba(168, 168, 168, 0.6) inset;
+    box-shadow: 0 1px .25rem 0 rgba(168, 168, 168, 0.6) inset;
+
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+}
+
+.botao-login {
+    background-color: var(--princeton-orange);
+    color: #fff;
+    width: 100%!important;
+    padding: .5rem .3125rem;
+    font-size: 1.25rem;
+    border: 1px solid transparent;
+    text-shadow: 0 1px 1px #333;
+    cursor: pointer;
+    margin: 1rem 0;
+    -webkit-border-radius: .625rem;
+    border-radius: .625rem;
+
+    transition: all 0.2s linear;
+}
+
+.botao-login:hover {
+    background-color: var(--secundary-princeton-orange);
+}
+
