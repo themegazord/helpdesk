@@ -26,6 +26,21 @@ class UsuarioService
     /**
      * @throws UsuarioException
      */
+    public function login(UsuarioDTO $usuarioDTO): UsuarioException|array {
+        $usuario = $this->consultaEmailExistente($usuarioDTO->getEmailUsuario());
+        if (empty($usuario)) return UsuarioException::emailInexistente($usuarioDTO->getEmailUsuario());
+        $senhaHash = $usuario['usuario_senha'];
+        if ($this->verificaSenhaCerto($senhaHash, $usuarioDTO->getSenhaUsuario())) {
+            return [
+                'nome' => $usuario['usuario_nome'],
+                'email' => $usuario['usuario_email']
+            ];
+        }
+    }
+
+    /**
+     * @throws UsuarioException
+     */
     public function validaCodigoVerificacao(string $hash, int $cod): bool|UsuarioException {
         $usuario = $this->consultaEmailExistente(base64_decode($hash));
         if($usuario['codigo_verificacao'] != $cod) {
@@ -42,6 +57,13 @@ class UsuarioService
 
     private function criptografaSenha(string $senha): string {
         return password_hash($senha, PASSWORD_BCRYPT, ['cost' => 12]);
+    }
+
+    /**
+     * @throws UsuarioException
+     */
+    private function verificaSenhaCerto(string $senhaHash, string $senha): bool|UsuarioException {
+        return !password_verify($senha, $senhaHash) ? UsuarioException::senhaInvalida() : true;
     }
 
     private function gerarCodigoVerificacao(string $email): int {
