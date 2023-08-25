@@ -86,9 +86,10 @@ class Container
         $this->bind('CadastroRequest', 'app\FormRequest\Autenticacao\CadastroRequest');
         $this->bind('LoginRequest', 'app\FormRequest\Autenticacao\LoginRequest');
         // Controllers
-        $this->bind('CadastroController', 'app\http\controllers\CadastroController');
         $this->bind('HomeController', 'app\http\controllers\HomeController');
+        $this->bind('CadastroController', 'app\http\controllers\CadastroController');
         $this->bind('LoginController', 'app\http\controllers\LoginController');
+        $this->bind('DashboardController', 'app\http\controllers\DashboardController');
 
 
         return match ($classe) {
@@ -108,6 +109,7 @@ class Container
             'HomeController' => $this->resolve('HomeController'),
             'CadastroController' => $this->resolve('CadastroController'),
             'LoginController' => $this->resolve('LoginController'),
+            'DashboardController' => $this->resolve('DashboardController'),
             default => throw new \Exception("A classe inserida não está cadastrada no container")
         };
     }
