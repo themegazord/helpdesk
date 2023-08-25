@@ -1,0 +1,18 @@
+.container-dashboard {
+    background: rgba(240, 240, 240, 1);
+    height: 95vh;
+    width: 85vw;
+}
+
+.logo {
+    color: #2B3674;
+    font-family: Poppins, serif;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%;
+}
+
+.resolve {
+
+}
