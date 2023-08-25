@@ -34,7 +34,7 @@ class LoginController
                 $respostaLogin = $this->loginRequest->dispatch($usuario);
                 $_SESSION['email'] = $respostaLogin['email'];
                 $_SESSION['nome'] = $respostaLogin['nome'];
-                redirect('/');
+                redirect('/dashboard');
             } catch (UsuarioException $ue) {
                 redirect('/login?erro=' . urlencode($ue->getMessage()));
             }
