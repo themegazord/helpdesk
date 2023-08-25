@@ -59,7 +59,7 @@ class CadastroController
             : base64_decode($emailHash)
         );
         if (empty($usuario)) {
-            redirect('/');
+            redirect('/dashboard');
         };
         include 'resources\views\ValidaEmail\ValidaEmail.php';
     }
