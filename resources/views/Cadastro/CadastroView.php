@@ -1,5 +1,5 @@
-<?php include 'resources\views\componentes\navbar\navbar.php'; ?>
-<?php include 'resources\views\componentes\notificacao\notificacao.php'; ?>
+<?php include 'resources\componentes\navbar\navbar.php'; ?>
+<?php include 'resources\componentes\notificacao\notificacao.php'; ?>
     <div class="container-cadastro-usuario">
         <form method="post" action="/cadastro-process" class="form-cadastro-usuario">
 
@@ -29,4 +29,4 @@
             </div>
         </form>
     </div>
-<?php include 'resources\views\componentes\footer\footer.php'; ?>
+<?php include 'resources\componentes\footer\footer.php'; ?>

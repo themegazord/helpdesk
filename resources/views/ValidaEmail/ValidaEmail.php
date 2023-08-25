@@ -1,5 +1,5 @@
-<?php include 'resources\views\componentes\navbar\navbar.php'; ?>
-<?php include 'resources\views\componentes\notificacao\notificacao.php'; ?>
+<?php include 'resources\componentes\navbar\navbar.php'; ?>
+<?php include 'resources\componentes\notificacao\notificacao.php'; ?>
     <div id="container-valida-email">
         <div class="container-form-valida-email">
             <div class="header-valida-email">
@@ -19,4 +19,4 @@
             </div>
         </div>
     </div>
-<?php include 'resources\views\componentes\footer\footer.php'; ?>
+<?php include 'resources\componentes\footer\footer.php'; ?>

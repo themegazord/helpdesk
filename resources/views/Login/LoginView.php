@@ -1,5 +1,5 @@
-<?php include 'resources\views\componentes\navbar\navbar.php'?>
-<?php include 'resources\views\componentes\notificacao\notificacao.php'?>
+<?php include 'resources\componentes\navbar\navbar.php' ?>
+<?php include 'resources\componentes\notificacao\notificacao.php' ?>
 
 <div class="container-login">
     <form action="/login-process" method="post" class="form-login">
@@ -21,4 +21,4 @@
     </form>
 </div>
 
-<?php include 'resources\views\componentes\footer\footer.php'?>
+<?php include 'resources\componentes\footer\footer.php' ?>

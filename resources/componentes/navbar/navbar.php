@@ -1,4 +1,4 @@
-<?php include 'resources/views/componentes/header/header.php'?>
+<?php include 'resources/componentes/header/header.php' ?>
 <nav id="navbar">
     <div id="logo">
         LOGO

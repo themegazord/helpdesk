@@ -1,4 +1,4 @@
-<?php include 'resources/views/componentes/navbar/navbar.php'?>
+<?php include 'resources/componentes/navbar/navbar.php' ?>
     <div class="header">
         <h1>Bem-vindo ao Helpdesk!</h1>
         <p>Sua solução para suporte e atendimento ao cliente.</p>
@@ -54,4 +54,4 @@
             <button type="submit">Enviar</button>
         </form>
     </div>
-<?php include 'resources/views/componentes/footer/footer.php'?>
+<?php include 'resources/componentes/footer/footer.php' ?>

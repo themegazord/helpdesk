@@ -1,0 +1,9 @@
+@import url('/resources/views/Home/style.css');
+@import url('/resources/views/Cadastro/style.css');
+@import url('/resources/views/ValidaEmail/style.css');
+@import url('/resources/componentes/navbar/style.css');
+@import url('/resources/componentes/footer/style.css');
+@import url('/resources/css/reset.css');
+@import url('/resources/css/coresPadroes.css');
+@import url('/resources/views/Login/style.css');
+
