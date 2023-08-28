@@ -1,0 +1,10 @@
+.footer-dashboard {
+    text-align: center;
+    padding: 20px 0;
+    background-color: rgba(240, 240, 240, 1);
+    color: #2B3674;
+    font-family: Poppins, serif;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
