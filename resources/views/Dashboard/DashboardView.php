@@ -6,4 +6,4 @@
     </div>
 </main>
 
-<?php include 'resources\componentes\footer\footer.php';?>
+<?php include 'resources\componentes\footerDashboard\footerDashboard.php';?>
