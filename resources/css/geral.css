@@ -5,6 +5,7 @@
 @import url('/resources/views/Dashboard/style.css');
 @import url('/resources/componentes/navbar/style.css');
 @import url('/resources/componentes/footer/style.css');
+@import url('/resources/componentes/footerDashboard/style.css');
 @import url('/resources/componentes/sidebar/style.css');
 @import url('/resources/css/reset.css');
 @import url('/resources/css/coresPadroes.css');
