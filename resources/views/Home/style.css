@@ -1,11 +1,3 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: var(--chocolate-cosmos);
-    margin: 0;
-    padding: 0;
-    color: var(--carmine);
-}
-
 .header {
     background-color: var(--princeton-orange);
     color: #fff;
