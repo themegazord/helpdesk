@@ -12,46 +12,160 @@
                     <canvas id="barChart"></canvas>
                 </div>
             </div>
+            <div class="container-nps-prioridade">
+                <div class="container-nps">
+                    <h3>NPS: Satisfação do cliente</h3>
+                    <p>Sua nota de NPS atualmente é: <?= $data['nps'] ?></p>
+                </div>
+                <div class="container-prioridade">
+                    <h3>Prioridade dos seus tickets</h3>
+                    <div class="prioridades">
+                        <div class="prioridade">
+                            <span class="titulo-prioridade">Baixa</span>
+                            <span class="qntd-tickets"><?= $data['prioridade']['baixa'] ?></span>
+                        </div>
+                        <div class="prioridade">
+                            <span class="titulo-prioridade">Normal</span>
+                            <span class="qntd-tickets"><?= $data['prioridade']['normal'] ?></span>
+                        </div>
+                        <div class="prioridade">
+                            <span class="titulo-prioridade">Alta</span>
+                            <span class="qntd-tickets"><?= $data['prioridade']['alta'] ?></span>
+                        </div>
+                        <div class="prioridade">
+                            <span class="titulo-prioridade">Urgente</span>
+                            <span class="qntd-tickets"><?= $data['prioridade']['urgente'] ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="container-fluid container-tickets">
-            <table class="table">
-                <thead class="table-dark">
-                    <tr>
-                        <th>
-                            <input type="checkbox" name="all" id="all">
-                            <label for="all"></label>
-                        </th>
-                        <th class="col">Status do Ticket</th>
-                        <th class="col">ID</th>
-                        <th class="col">Assunto</th>
-                        <th class="col">Solicitante</th>
-                        <th class="col">Ult. Atualização</th>
-                        <th class="col">Grupo</th>
-                        <th class="col">Atribuido</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>
-                            <input type="checkbox" name="all" id="all">
-                            <label for="all"></label>
-                        </th>
-                        <td>Aberto</td>
-                        <td>#2</td>
-                        <td>TICKET DE EXEMPLO: Produto danificado</td>
-                        <td>Taylor Moore</td>
-                        <td>Quarta feira 16:06</td>
-                        <td>Suporte</td>
-                        <td>Gustavo de Camargo Campos</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="container-fluid container-ticket-infos">
+            <div class="container-tickets-por-prioridade">
+                <div class="container-tickets-por-prioridade--baixa">
+                    <h3>Baixa prioridade</h3>
+                    <table class="table">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>ID</th>
+                                <th>Assunto</th>
+                                <th>Solicitante</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12</td>
+                                <td>Ticket teste: Fudeu de vez</td>
+                                <td>Cliente 1</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Ticket teste: Fudeu de vez</td>
+                                <td>Cliente 1</td>
+                            </tr>
+                            <tr>
+                                <td>12</td>
+                                <td>Ticket teste: Fudeu de vez</td>
+                                <td>Cliente 1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container-tickets-por-prioridade--normal">
+                    <h3>Normal prioridade</h3>
+                    <table class="table">
+                        <thead class="table-info">
+                        <tr>
+                            <th>ID</th>
+                            <th>Assunto</th>
+                            <th>Solicitante</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container-tickets-por-prioridade--alta">
+                    <h3>Alta prioridade</h3>
+                    <table class="table">
+                        <thead class="table-warning">
+                        <tr>
+                            <th>ID</th>
+                            <th>Assunto</th>
+                            <th>Solicitante</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container-tickets-por-prioridade--urgente">
+                    <h3>Urgente prioridade</h3>
+                    <table class="table">
+                        <thead class="table-danger">
+                        <tr>
+                            <th>ID</th>
+                            <th>Assunto</th>
+                            <th>Solicitante</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Ticket teste: Fudeu de vez</td>
+                            <td>Cliente 1</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div></div>
         </div>
     </div>
 </main>
 <script>
     // Dados do PHP
-    var dadosPHP = <?php echo json_encode($data); ?>;
+    var dadosPHP = <?php echo json_encode($data['tickets']); ?>;
 
     // Encontre o elemento canvas
     var ctx = document.getElementById('barChart').getContext('2d');
