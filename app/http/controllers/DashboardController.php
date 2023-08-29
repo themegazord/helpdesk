@@ -10,6 +10,9 @@ class DashboardController
     }
 
     public function index(): void {
+        $data = [
+            2,5,6,1,5
+        ];
         include 'resources/views/Dashboard/DashboardView.php';
     }
 }
