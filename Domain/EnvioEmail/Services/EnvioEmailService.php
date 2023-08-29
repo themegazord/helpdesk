@@ -76,22 +76,20 @@ class EnvioEmailService
     /**
      * @throws \Exception
      */
-    public function envioEmail(string $data, string $queue): void {
-        $conexao = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
+    public function envioEmail(string $data, string $uso): void {
+
+        $conexao = new AMQPStreamConnection('localhost', 5672,'guest', 'guest');
         $canal = $conexao->channel();
 
-        match ($queue) {
-            'emailCodigoVerificacao' => $canal->queue_declare('emailCodigoVerificacao', false, true, false, false)
+        $canal->exchange_declare('emails', 'direct', false, false, false);
+
+        $mensagem = new AMQPMessage($data);
+
+        match ($uso) {
+          'emailCodigoVerificacao' => $canal->basic_publish($mensagem, 'emails', $uso),
         };
 
-        $msg = new AMQPMessage(
-            $data,
-            array('delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT)
-        );
-
-        match ($queue) {
-            'emailCodigoVerificacao' => $canal->basic_publish($msg, '', 'emailCodigoVerificacao')
-        };
+        echo "[X] Enviado {$uso} : {$data}\n";
 
         $canal->close();
         $conexao->close();
